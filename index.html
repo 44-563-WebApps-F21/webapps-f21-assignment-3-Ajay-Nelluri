@@ -51,7 +51,7 @@ table, th, td {
  
     <h1>Food Recommendations</h1>
  
-<table style="width:100%">
+<table style="width:50%">
     <tr>
       <th>Food Items</th>
       <th>Location</th>
@@ -81,6 +81,66 @@ table, th, td {
  
 </body>
 </html>
+
+<hr>
+
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>Data Structure - Disjoint set Union</h1>
+        <blockquote>A data structure is a named location that can be used to store and organize data. And, an algorithm is a collection of steps to solve a particular problem.
+             Learning data structures and algorithms allow us to write efficient and optimized computer programs.A DSU will have an operation to combine any two sets, and it will be able to tell in which set a specific element is. 
+             The classical version also introduces a third operation, it can create a set from a new element.</blockquote>
+    </body>
+</html>
+
+<pre>
+
+    void make_set(int v) {
+        parent[v] = make_pair(v, 0);
+        rank[v] = 0;
+        bipartite[v] = true;
+    }
+    
+    pair<int, int> find_set(int v) {
+        if (v != parent[v].first) {
+            int parity = parent[v].second;
+            parent[v] = find_set(parent[v].first);
+            parent[v].second ^= parity;
+        }
+        return parent[v];
+    }
+    
+    void add_edge(int a, int b) {
+        pair<int, int> pa = find_set(a);
+        a = pa.first;
+        int x = pa.second;
+    
+        pair<int, int> pb = find_set(b);
+        b = pb.first;
+        int y = pb.second;
+    
+        if (a == b) {
+            if (x == y)
+                bipartite[a] = false;
+        } else {
+            if (rank[a] < rank[b])
+                swap (a, b);
+            parent[b] = make_pair(a, x^y^1);
+            bipartite[a] &= bipartite[b];
+            if (rank[a] == rank[b])
+                ++rank[a];
+        }
+    }
+    
+    bool is_bipartite(int v) {
+        return bipartite[find_set(v).first];
+    }
+
+</pre>
+
+             
+  
 
 
 
